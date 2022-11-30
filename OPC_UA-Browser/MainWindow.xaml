@@ -1,0 +1,42 @@
+﻿<Window x:Class="OPC_UA_Browser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OPC_UA_Browser"
+        xmlns:views="clr-namespace:OPC_UA_Browser.Views"
+        xmlns:viewModels="clr-namespace:OPC_UA_Browser.ViewModels"
+        xmlns:valueConverter="clr-namespace:OPC_UA_Browser.ValueConverter"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="900" Width="1600">
+
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel></viewModels:MainWindowViewModel>
+    </Window.DataContext>
+
+    <Window.Resources>
+
+        <valueConverter:BoolInverterConverter x:Key="BoolInverter"/>
+    </Window.Resources>
+
+    <Grid IsEnabled="{Binding IsLoading, Converter={StaticResource BoolInverter}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <views:NodeBrowserView Grid.Column="0" Margin="3" DataContext="{Binding NodeBrowser}"/>
+
+        <views:NodeSelectorView Grid.Column="1" Margin="3" DataContext="{Binding NodeSelector}"/>
+
+        <Border Grid.Column="2" 
+                Margin="3 25 3 3"
+                BorderBrush="LightGray" 
+                BorderThickness="1" 
+                Padding="5">
+            <views:NodeDetailsView DataContext="{Binding NodeDetails}"/>
+        </Border>
+
+    </Grid>
+</Window>

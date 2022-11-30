@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="OPC_UA_Browser.Views.NodeBrowserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OPC_UA_Browser.Views"
+             xmlns:viewModels="clr-namespace:OPC_UA_Browser.ViewModels"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:valueConverter="clr-namespace:OPC_UA_Browser.ValueConverter"
+             xmlns:models="clr-namespace:OPC_UA_Browser.Models"
+             xmlns:userControls="clr-namespace:OPC_UA_Browser.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModels:NodeBrowserViewModel/>
+    </UserControl.DataContext>
+
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadedCommand}"></b:InvokeCommandAction>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <valueConverter:EventParameterExtractor x:Key="EventParameterExtractor"/>
+        <valueConverter:BoolInverterConverter x:Key="BoolInverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TreeView Grid.Column="0" ItemsSource="{Binding Nodes}" IsEnabled="{Binding IsLoading, Converter={StaticResource BoolInverter}}">
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="SelectedItemChanged">
+                    <b:InvokeCommandAction Command="{Binding SelectionChangedCommand}"  EventArgsConverter="{StaticResource EventParameterExtractor}"/>
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type models:UaNodeModel}" ItemsSource="{Binding ChildNodes}">
+                    <userControls:NodeItem Node="{Binding Path=.}"/>
+                    <!--<TextBlock Text="{Binding DisplayName}" HorizontalAlignment="Stretch"/>-->
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                    <Setter Property="Padding" Value="2"></Setter>
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
+
+    </Grid>
+</UserControl>
