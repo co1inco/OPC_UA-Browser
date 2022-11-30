@@ -59,26 +59,7 @@ public class UAConnectionService
         
         return refs;
     }
-
-    //public async Task<ReferenceDescriptionCollection> BrowseNodeAsync(NodeId node, CancellationToken cancellationToken = default)
-    //{
-
-    //    var description = new BrowseDescriptionCollection()
-    //    {
-    //        GetBrowseDescription(node)
-    //    };
-
-    //    var result = await _session.BrowseAsync(null, null, 0u, description, cancellationToken);
-
-    //    if (!result.Results.Any())
-    //        return new ReferenceDescriptionCollection();
-
-    //    if (result.Results[0].StatusCode != StatusCodes.Good)
-    //        throw new Exception($"Result status code was {result.Results[0].StatusCode}");
-
-    //    return result.Results[0].References;
-    //}
-
+    
     public Task<IEnumerable<UaNodeModel>> BrowseNodeAsync(UaNodeModel node, CancellationToken cancellationToken = default)
     {
         var nodeId = ExpandedNodeId.ToNodeId(node.NodeId, null);
@@ -134,15 +115,6 @@ public class UAConnectionService
 
         return result.Results.Select(x => x.References);
     }
-
-
-    //public Task<DataValue> ReadValueAsync(NodeId node, CancellationToken cancellationToken = default)
-    //{
-
-    //    //var result = await _uaClient.ReadAsync(node.Format());
-
-    //    return _session.ReadValueAsync(node, cancellationToken);
-    //}
 
 
     public async Task<UaNodeValueModel> ReadNodeValueAsync(UaNodeModel node, CancellationToken cancellationToken = default)

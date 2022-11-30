@@ -30,40 +30,7 @@ namespace OPC_UA_Browser
             UaConnectionService = new UAConnectionService("opc.tcp://172.18.1.45:48030");
 
             base.OnStartup(e);
-
             
-            //var nodes = await uaService.BrowseNodeAsync(UAConnectionService.RootNode);
-
-
-            //var uaClient = new UaClient("TZIDC_Test", "opc.tcp://172.18.1.45:48030", true, true);
-
-            //uaClient.Connect();
-
-
-
-            //var sessionField = typeof(UaClient).GetField("Session", BindingFlags.NonPublic | BindingFlags.Instance);
-            //var session = (Session)sessionField.GetValue(uaClient);
-
-            //var result = session.Browse(
-            //    null,
-            //    null,
-            //    ObjectIds.ObjectsFolder,
-            //    0u,
-            //    BrowseDirection.Forward,
-            //    ReferenceTypeIds.HierarchicalReferences,
-            //    true,
-            //    (uint)NodeClass.Variable | (uint)NodeClass.Object | (uint)NodeClass.Method,
-            //    out var cp,
-            //    out var refs);
-
-
-            //var result = uaClient.Tags("hart_fsk.22.5697.16410D0C2B.Online.ParameterSet.tag");
-            //var result = uaClient.Tags("hart_fsk");
-
-            //var client = uaClient.Devices(true);
-            //var group = uaClient.Groups("Device");
-
-
         }
     }
 }
