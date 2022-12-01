@@ -77,7 +77,7 @@ public partial class MainWindowViewModel
                 uaNode.ChildNodes.Clear();
                 foreach (var uaNodeModel in result)
                     uaNode.ChildNodes.Add(uaNodeModel);
-                
+                uaNode.IsBrowsed = true;
                 SelectedNode = uaNode;
             }
             finally
